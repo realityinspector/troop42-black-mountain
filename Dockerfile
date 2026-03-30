@@ -1,22 +1,15 @@
-# Stage 1: Build
+# Stage 1: Build frontend
 FROM node:22-alpine AS build
 
 WORKDIR /app
 
-# Copy dependency manifests
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
-# Install all dependencies (including devDependencies for build)
 RUN npm ci --legacy-peer-deps
-
-# Generate Prisma client
 RUN npx prisma generate
 
-# Copy source code
 COPY . .
-
-# Build frontend (Vite) and compile server (TypeScript)
 RUN npm run build
 
 # Stage 2: Production
@@ -26,24 +19,21 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Install all dependencies (tsx needed at runtime)
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
-RUN npm ci --legacy-peer-deps
 
-# Re-generate Prisma client for production image
-RUN npx prisma generate
+# Install all deps (tsx, prisma needed at runtime)
+RUN npm ci --legacy-peer-deps && npx prisma generate
 
-# Copy built frontend assets
+# Copy built frontend
 COPY --from=build /app/dist ./dist
 
 # Copy server source (runs via tsx)
 COPY server ./server
 
-# Copy public assets if present
+# Copy public assets
 COPY --from=build /app/public ./public
 
 EXPOSE ${PORT:-3042}
 
-# Run database migrations then start the server
 CMD ["sh", "-c", "npx prisma db push --skip-generate && npx tsx server/index.ts"]
