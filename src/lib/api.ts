@@ -60,7 +60,7 @@ export function getEvents(params?: { limit?: number; published?: boolean }) {
   if (params?.limit) searchParams.set('limit', String(params.limit));
   if (params?.published !== undefined) searchParams.set('published', String(params.published));
   const qs = searchParams.toString();
-  return request<Event[]>(`/events${qs ? `?${qs}` : ''}`);
+  return request<{ events: Event[] }>(`/events${qs ? `?${qs}` : ''}`).then((r) => r.events);
 }
 
 export function getEvent(slug: string) {
@@ -109,7 +109,7 @@ export function getPosts(params?: { limit?: number; category?: string; published
   if (params?.category) searchParams.set('category', params.category);
   if (params?.published !== undefined) searchParams.set('published', String(params.published));
   const qs = searchParams.toString();
-  return request<Post[]>(`/posts${qs ? `?${qs}` : ''}`);
+  return request<{ posts: Post[] }>(`/posts${qs ? `?${qs}` : ''}`).then((r) => r.posts);
 }
 
 export function getPost(slug: string) {
@@ -156,7 +156,7 @@ export function getResources(params?: { category?: string; published?: boolean }
   if (params?.category) searchParams.set('category', params.category);
   if (params?.published !== undefined) searchParams.set('published', String(params.published));
   const qs = searchParams.toString();
-  return request<Resource[]>(`/resources${qs ? `?${qs}` : ''}`);
+  return request<{ resources: Resource[] }>(`/resources${qs ? `?${qs}` : ''}`).then((r) => r.resources);
 }
 
 export function getResource(slug: string) {
@@ -197,7 +197,7 @@ export function getNotifications(params?: { active?: boolean }) {
   const searchParams = new URLSearchParams();
   if (params?.active !== undefined) searchParams.set('active', String(params.active));
   const qs = searchParams.toString();
-  return request<Notification[]>(`/notifications${qs ? `?${qs}` : ''}`);
+  return request<{ notifications: Notification[] }>(`/notifications${qs ? `?${qs}` : ''}`).then((r) => r.notifications);
 }
 
 export function createNotification(data: Partial<Notification>) {
@@ -238,7 +238,7 @@ export function submitContact(data: { name: string; email: string; subject: stri
 }
 
 export function getContactMessages() {
-  return request<ContactMessage[]>('/contact');
+  return request<{ messages: ContactMessage[] }>('/contact').then((r) => r.messages);
 }
 
 export function markContactRead(id: string) {
