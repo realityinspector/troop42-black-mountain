@@ -8,7 +8,7 @@ COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
 # Install all dependencies (including devDependencies for build)
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Generate Prisma client
 RUN npx prisma generate
@@ -46,4 +46,4 @@ COPY --from=build /app/public ./public
 EXPOSE ${PORT:-3042}
 
 # Run database migrations then start the server
-CMD ["sh", "-c", "npx prisma migrate deploy && npx tsx server/index.ts"]
+CMD ["sh", "-c", "npx prisma db push --skip-generate && npx tsx server/index.ts"]
