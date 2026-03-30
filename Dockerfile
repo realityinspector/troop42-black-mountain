@@ -38,4 +38,4 @@ COPY --from=build /app/public ./public
 
 EXPOSE ${PORT:-3042}
 
-CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist-server/index.js"]
+CMD ["sh", "-c", "npx prisma db push --skip-generate && echo 'Starting server...' && node dist-server/index.js 2>&1"]
