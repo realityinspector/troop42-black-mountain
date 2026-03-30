@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from '@/hooks/useAuth';
 import Layout from '@/components/Layout';
@@ -44,21 +44,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
   }
 
   if (!user || !isAdmin) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center max-w-md mx-auto px-4">
-          <h2 className="font-heading text-2xl font-bold text-scout-navy mb-2">
-            Access Denied
-          </h2>
-          <p className="font-body text-scout-slate mb-6">
-            You need to be logged in as an administrator to view this page.
-          </p>
-          <a href="/login" className="btn-primary">
-            Go to Login
-          </a>
-        </div>
-      </div>
-    );
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;

@@ -60,13 +60,22 @@ app.get("/api/health", (_req, res) => {
 if (isProd) {
   const distPath = path.resolve(__dirname, "../dist");
 
-  app.use(express.static(distPath, { maxAge: "1d" }));
+  // Cache hashed assets (JS/CSS) for 1 day, but never cache index.html
+  app.use(express.static(distPath, {
+    maxAge: "1d",
+    setHeaders(res, filePath) {
+      if (filePath.endsWith(".html")) {
+        res.setHeader("Cache-Control", "no-cache");
+      }
+    },
+  }));
 
-  // SPA fallback: serve index.html for any non-API route
+  // SPA fallback: serve index.html for any non-API route (no-cache)
   app.get("*", (req, res, next) => {
     if (req.path.startsWith("/api")) {
       return next();
     }
+    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
