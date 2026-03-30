@@ -36,6 +36,10 @@ COPY --from=build /app/dist-server ./dist-server
 # Copy public assets
 COPY --from=build /app/public ./public
 
+# Copy startup script
+COPY start.sh ./start.sh
+RUN chmod +x /app/start.sh
+
 EXPOSE ${PORT:-3042}
 
-CMD ["sh", "-c", "npx prisma db push --skip-generate && echo 'Starting server...' && node dist-server/index.js 2>&1"]
+CMD ["/app/start.sh"]
