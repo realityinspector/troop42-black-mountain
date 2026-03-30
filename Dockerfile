@@ -1,4 +1,4 @@
-# Stage 1: Build frontend
+# Stage 1: Build frontend + compile server
 FROM node:22-alpine AS build
 
 WORKDIR /app
@@ -10,7 +10,9 @@ RUN npm ci --legacy-peer-deps
 RUN npx prisma generate
 
 COPY . .
-RUN npm run build
+
+# Build frontend (Vite) and compile server (esbuild)
+RUN npm run build && npx esbuild server/index.ts --bundle --platform=node --outdir=dist-server --format=esm --packages=external
 
 # Stage 2: Production
 FROM node:22-alpine AS production
@@ -22,18 +24,18 @@ ENV NODE_ENV=production
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
-# Install all deps (tsx, prisma needed at runtime)
-RUN npm ci --legacy-peer-deps && npx prisma generate
+# Install production deps only + generate Prisma client
+RUN npm ci --omit=dev --legacy-peer-deps && npx prisma generate
 
 # Copy built frontend
 COPY --from=build /app/dist ./dist
 
-# Copy server source (runs via tsx)
-COPY server ./server
+# Copy compiled server
+COPY --from=build /app/dist-server ./dist-server
 
 # Copy public assets
 COPY --from=build /app/public ./public
 
 EXPOSE ${PORT:-3042}
 
-CMD ["sh", "-c", "npx prisma db push --skip-generate && npx tsx server/index.ts"]
+CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist-server/index.js"]
