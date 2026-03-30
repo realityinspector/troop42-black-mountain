@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <style>
+      .topo-line { fill: none; stroke: #E5DCC8; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- Topographic contour lines - organic, flowing shapes -->
+  <!-- Layer 1 - large contours -->
+  <path class="topo-line" stroke-width="0.6" d="M-10,80 C10,75 30,60 55,58 C80,56 100,65 120,70 C140,75 160,68 180,60 C195,55 205,50 210,48"/>
+  <path class="topo-line" stroke-width="0.6" d="M-10,95 C15,90 40,78 65,75 C90,72 110,80 130,85 C155,90 175,82 195,75 C205,71 210,68 215,65"/>
+
+  <!-- Layer 2 - medium contours -->
+  <path class="topo-line" stroke-width="0.5" d="M-5,115 C20,110 45,100 70,96 C95,92 115,100 140,105 C165,110 185,102 210,94"/>
+  <path class="topo-line" stroke-width="0.5" d="M-5,130 C25,126 50,118 75,115 C100,112 120,118 145,122 C170,126 190,120 210,112"/>
+
+  <!-- Layer 3 - close contours (hill/peak) -->
+  <path class="topo-line" stroke-width="0.4" d="M55,38 C70,34 85,32 100,35 C115,38 120,45 115,52 C110,58 95,60 80,56 C65,52 55,45 55,38Z"/>
+  <path class="topo-line" stroke-width="0.4" d="M65,40 C75,37 88,36 98,38 C108,40 112,46 108,50 C104,54 92,55 82,52 C72,49 65,44 65,40Z"/>
+  <path class="topo-line" stroke-width="0.35" d="M76,42 C82,40 90,39 96,41 C102,43 103,47 99,49 C95,51 86,51 80,48 C76,46 75,44 76,42Z"/>
+
+  <!-- Layer 4 - lower contours -->
+  <path class="topo-line" stroke-width="0.6" d="M-10,150 C20,145 50,138 80,135 C110,132 135,138 160,143 C185,148 200,142 210,136"/>
+  <path class="topo-line" stroke-width="0.5" d="M-5,168 C25,164 55,155 85,152 C115,149 140,155 170,160 C195,164 210,158 215,154"/>
+
+  <!-- Layer 5 - secondary hill -->
+  <path class="topo-line" stroke-width="0.4" d="M145,140 C158,136 172,134 182,137 C192,140 195,146 190,152 C185,157 170,158 158,155 C148,152 144,146 145,140Z"/>
+  <path class="topo-line" stroke-width="0.35" d="M155,142 C163,139 174,138 180,140 C186,142 188,147 184,150 C180,153 169,154 161,151 C155,149 153,145 155,142Z"/>
+
+  <!-- Layer 6 - top edge contours for seamless tiling -->
+  <path class="topo-line" stroke-width="0.6" d="M-10,18 C15,15 40,8 65,5 C90,2 115,8 140,14 C165,20 185,15 210,8"/>
+  <path class="topo-line" stroke-width="0.5" d="M-5,35 C20,30 45,22 70,18 C95,15 118,22 143,28 C168,34 188,28 210,22"/>
+
+  <!-- Layer 7 - bottom edge contours for tiling -->
+  <path class="topo-line" stroke-width="0.5" d="M-5,185 C30,182 60,175 90,172 C120,169 145,174 175,178 C200,182 210,178 215,175"/>
+  <path class="topo-line" stroke-width="0.4" d="M-5,198 C30,195 65,190 100,188 C135,186 160,190 195,194 C210,196 215,194 220,192"/>
+
+  <!-- Subtle dot markers (survey points) -->
+  <circle cx="88" cy="44" r="1" fill="#E5DCC8" opacity="0.6"/>
+  <circle cx="168" cy="145" r="1" fill="#E5DCC8" opacity="0.6"/>
+  <circle cx="30" cy="100" r="0.8" fill="#E5DCC8" opacity="0.4"/>
+  <circle cx="175" cy="80" r="0.8" fill="#E5DCC8" opacity="0.4"/>
+</svg>

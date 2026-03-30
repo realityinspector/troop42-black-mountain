@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <defs>
+    <style>
+      .logo-forest { fill: #1B4332; }
+      .logo-navy { fill: #1B263B; }
+      .logo-gold { fill: #C9972F; }
+      .logo-pine { fill: #2D6A4F; }
+      .logo-sage { fill: #52B788; }
+    </style>
+  </defs>
+
+  <!-- Mountain silhouette (Black Mountain) -->
+  <!-- Far background mountain -->
+  <polygon points="30,130 90,65 150,130" class="logo-navy" opacity="0.4"/>
+  <!-- Main mountain peak -->
+  <polygon points="80,130 150,40 220,130" class="logo-forest"/>
+  <!-- Secondary peak -->
+  <polygon points="150,130 210,60 270,130" class="logo-navy" opacity="0.6"/>
+  <!-- Snow cap suggestion on main peak -->
+  <polygon points="141,55 150,40 159,55 153,52 150,56 147,52" fill="#D8F3DC" opacity="0.5"/>
+
+  <!-- Tree line -->
+  <!-- Left trees -->
+  <polygon points="42,130 47,112 52,130" class="logo-pine"/>
+  <polygon points="52,130 58,108 64,130" class="logo-forest"/>
+  <polygon points="62,130 67,115 72,130" class="logo-pine"/>
+  <!-- Right trees -->
+  <polygon points="228,130 233,115 238,130" class="logo-pine"/>
+  <polygon points="236,130 242,108 248,130" class="logo-forest"/>
+  <polygon points="246,130 252,112 258,130" class="logo-pine"/>
+
+  <!-- Ground line -->
+  <rect x="25" y="130" width="250" height="2" rx="1" class="logo-forest"/>
+
+  <!-- "42" badge circle on the mountain -->
+  <circle cx="150" cy="95" r="24" class="logo-navy"/>
+  <circle cx="150" cy="95" r="22" fill="none" stroke="#C9972F" stroke-width="1.5"/>
+  <circle cx="150" cy="95" r="20" fill="none" stroke="#C9972F" stroke-width="0.5"/>
+
+  <!-- Compass points on badge -->
+  <polygon points="150,71.5 148.5,75 151.5,75" class="logo-gold"/>
+  <polygon points="150,118.5 148.5,115 151.5,115" class="logo-gold"/>
+  <polygon points="126.5,95 130,93.5 130,96.5" class="logo-gold"/>
+  <polygon points="173.5,95 170,93.5 170,96.5" class="logo-gold"/>
+
+  <!-- Number 42 -->
+  <text x="150" y="101" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="26" class="logo-gold">42</text>
+
+  <!-- Fleur-de-lis mini mark above 42 -->
+  <g transform="translate(150,77) scale(0.35)">
+    <path d="M0,-10 C0,-10 -3,-4 -3,-1 C-3,1 -1.5,2.5 0,3 C1.5,2.5 3,1 3,-1 C3,-4 0,-10 0,-10Z" class="logo-gold"/>
+    <path d="M-5.5,-6 C-5.5,-6 -7,-3 -6.5,-1 C-6.2,0.5 -5,1 -4,0.5 C-3.7,-0.3 -4.2,-2.3 -5.5,-6Z" class="logo-gold"/>
+    <path d="M5.5,-6 C5.5,-6 7,-3 6.5,-1 C6.2,0.5 5,1 4,0.5 C3.7,-0.3 4.2,-2.3 5.5,-6Z" class="logo-gold"/>
+  </g>
+
+  <!-- TROOP 42 text -->
+  <text x="150" y="155" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="22" letter-spacing="6" class="logo-forest">TROOP 42</text>
+
+  <!-- Decorative line dividers -->
+  <line x1="60" y1="162" x2="120" y2="162" stroke="#C9972F" stroke-width="1" stroke-linecap="round"/>
+  <line x1="180" y1="162" x2="240" y2="162" stroke="#C9972F" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="150" cy="162" r="2" class="logo-gold"/>
+
+  <!-- BLACK MOUNTAIN text -->
+  <text x="150" y="178" text-anchor="middle" font-family="'Source Sans 3', system-ui, sans-serif" font-weight="600" font-size="14" letter-spacing="4" class="logo-navy">BLACK MOUNTAIN</text>
+
+  <!-- Small decorative elements -->
+  <line x1="80" y1="185" x2="120" y2="185" stroke="#1B4332" stroke-width="0.5" opacity="0.4"/>
+  <line x1="180" y1="185" x2="220" y2="185" stroke="#1B4332" stroke-width="0.5" opacity="0.4"/>
+  <circle cx="150" cy="185" r="1.2" class="logo-gold" opacity="0.6"/>
+</svg>

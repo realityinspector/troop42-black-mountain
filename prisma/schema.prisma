@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum PostCategory {
+  BLOG
+  SCOUTMASTER_NOTE
+  ANNOUNCEMENT
+}
+
+enum EventCategory {
+  MEETING
+  CAMPOUT
+  SERVICE
+  FUNDRAISER
+  SPECIAL
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  URGENT
+}
+
+enum ResourceCategory {
+  PACKING_LIST
+  GEAR_GUIDE
+  MERIT_BADGE
+  GENERAL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  role         Role     @default(VIEWER)
+  passwordHash String
+  googleId     String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  posts Post[]
+
+  @@index([email])
+  @@index([googleId])
+}
+
+model Post {
+  id            String       @id @default(cuid())
+  title         String
+  slug          String       @unique
+  content       String       @db.Text
+  excerpt       String?
+  category      PostCategory @default(BLOG)
+  published     Boolean      @default(false)
+  featuredImage String?
+  authorId      String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Event {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  description String        @db.Text
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  allDay      Boolean       @default(false)
+  category    EventCategory @default(MEETING)
+  published   Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([startDate])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  active    Boolean          @default(true)
+  expiresAt DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([active])
+  @@index([expiresAt])
+}
+
+model Resource {
+  id        String           @id @default(cuid())
+  title     String
+  slug      String           @unique
+  content   String           @db.Text
+  category  ResourceCategory @default(GENERAL)
+  sortOrder Int              @default(0)
+  published Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([published])
+  @@index([sortOrder])
+}
