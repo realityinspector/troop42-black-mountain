@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import { login as apiLogin, getMe, type User } from '@/lib/api';
+import { login as apiLogin, loginDevToken as apiLoginDevToken, getMe, type User } from '@/lib/api';
 
 interface AuthContextType {
   user: User | null;
@@ -53,9 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const loginWithDevToken = useCallback(async (devToken: string) => {
-    localStorage.setItem('auth_token', devToken);
-    setToken(devToken);
-    // Token is set, the useEffect will call fetchUser
+    const res = await apiLoginDevToken(devToken);
+    localStorage.setItem('auth_token', res.token);
+    setToken(res.token);
+    setUser(res.user);
   }, []);
 
   return (

@@ -268,8 +268,15 @@ export function login(email: string, password: string) {
   });
 }
 
+export function loginDevToken(devToken: string) {
+  return request<AuthResponse>('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ devToken }),
+  });
+}
+
 export function getMe() {
-  return request<User>('/auth/me');
+  return request<{ user: User }>('/auth/me').then((r) => r.user);
 }
 
 // ── AI ────────────────────────────────────────────────
