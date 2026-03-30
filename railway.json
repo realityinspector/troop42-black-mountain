@@ -5,9 +5,8 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "npx prisma db push --skip-generate && node dist-server/index.js",
-    "healthcheckPath": "/api/health",
+    "startCommand": "echo '=== Starting ===' && ls -la dist-server/ && echo '=== Checking prisma ===' && ls node_modules/.prisma/client/ 2>&1 | head -5 && echo '=== Running prisma db push ===' && npx prisma db push --skip-generate 2>&1 && echo '=== Starting node ===' && node dist-server/index.js 2>&1",
     "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 3
+    "restartPolicyMaxRetries": 1
   }
 }
