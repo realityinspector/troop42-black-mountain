@@ -64,7 +64,7 @@ export function getEvents(params?: { limit?: number; published?: boolean }) {
 }
 
 export function getEvent(slug: string) {
-  return request<Event>(`/events/${slug}`);
+  return request<{ event: Event }>(`/events/${slug}`).then((r) => r.event);
 }
 
 export function createEvent(data: Partial<Event>) {
@@ -113,7 +113,7 @@ export function getPosts(params?: { limit?: number; category?: string; published
 }
 
 export function getPost(slug: string) {
-  return request<Post>(`/posts/${slug}`);
+  return request<{ post: Post }>(`/posts/${slug}`).then((r) => r.post);
 }
 
 export function createPost(data: Partial<Post>) {
@@ -160,7 +160,7 @@ export function getResources(params?: { category?: string; published?: boolean }
 }
 
 export function getResource(slug: string) {
-  return request<Resource>(`/resources/${slug}`);
+  return request<{ resource: Resource }>(`/resources/${slug}`).then((r) => r.resource);
 }
 
 export function createResource(data: Partial<Resource>) {
