@@ -89,9 +89,11 @@ export default function EditEvent() {
         setTitle(evt.title);
         setSlug(evt.slug);
         setSlugManual(true);
+        setCategory(evt.category || 'MEETING');
         setLocation(evt.location || '');
         setStartDate(toDatetimeLocal(evt.startDate));
         setEndDate(evt.endDate ? toDatetimeLocal(evt.endDate) : '');
+        setAllDay(evt.allDay ?? false);
         setDescription(evt.description || evt.content || '');
         setImageUrl(evt.imageUrl || '');
         setPublished(evt.published);
@@ -127,9 +129,11 @@ export default function EditEvent() {
     const data: Partial<Event> = {
       title: title.trim(),
       slug: slug.trim() || slugify(title),
+      category,
       location: location.trim() || undefined,
       startDate: new Date(startDate).toISOString(),
       endDate: endDate ? new Date(endDate).toISOString() : undefined,
+      allDay,
       description,
       imageUrl: imageUrl.trim() || undefined,
       published: shouldPublish !== undefined ? shouldPublish : published,
@@ -269,7 +273,7 @@ export default function EditEvent() {
                   </label>
                   <select
                     value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => setCategory(e.target.value as Event['category'])}
                     className="w-full px-4 py-2.5 bg-white border border-scout-khaki/50 rounded-lg text-scout-navy font-body focus:outline-none focus:ring-2 focus:ring-scout-gold focus:border-transparent transition"
                   >
                     {EVENT_CATEGORIES.map((cat) => (
