@@ -25,7 +25,7 @@ async function request<T>(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: response.statusText }));
-    throw new Error(error.message || `Request failed: ${response.status}`);
+    throw new Error(error.error || error.message || `Request failed: ${response.status}`);
   }
 
   // Handle 204 No Content

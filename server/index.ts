@@ -28,7 +28,7 @@ app.use(compression());
 app.use(
   cors({
     origin: isProd
-      ? process.env.CORS_ORIGIN || "https://troop42blackmountain.org"
+      ? process.env.CORS_ORIGIN || "https://troop42blackmountainnc.com"
       : ["http://localhost:5173", "http://localhost:3042"],
     credentials: true,
   })

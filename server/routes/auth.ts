@@ -28,11 +28,17 @@ function signToken(user: { id: string; email: string; name: string; role: string
  */
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    const { email, password, devToken } = req.body;
+    const body = req.body || {};
+    const { email, password, devToken } = body;
 
     // Dev token login
-    const envDevToken = process.env.AUTH_DEV_TOKEN;
-    if (envDevToken && devToken === envDevToken) {
+    if (devToken) {
+      const envDevToken = process.env.AUTH_DEV_TOKEN;
+      if (!envDevToken || devToken !== envDevToken) {
+        res.status(401).json({ error: "Invalid dev token" });
+        return;
+      }
+
       // Find or acknowledge the admin user for dev mode
       const adminUser = await prisma.user.findFirst({
         where: { role: "ADMIN" },
@@ -40,7 +46,12 @@ router.post("/login", async (req: Request, res: Response) => {
 
       const token = adminUser
         ? signToken(adminUser)
-        : envDevToken; // fall back to raw dev token if no admin exists yet
+        : signToken({
+            id: "dev-admin",
+            email: "admin@troop42.org",
+            name: "Dev Admin",
+            role: "ADMIN",
+          });
 
       res.json({
         token,
@@ -56,6 +67,7 @@ router.post("/login", async (req: Request, res: Response) => {
 
     // Email + password login
     if (!email || !password) {
+      console.log("Login: no devToken or email in body. Keys:", Object.keys(body), "Content-Type:", req.headers["content-type"]);
       res.status(400).json({ error: "Email and password are required" });
       return;
     }
